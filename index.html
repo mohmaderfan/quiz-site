@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#4f46e5">
+<title>تیزبین | فروشگاه سکه</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap bar">
+    <div class="menuwrap">
+      <button class="dots" id="menuBtn" type="button" aria-label="منو" aria-expanded="false" aria-controls="menu">⋮</button>
+      <nav class="menu" id="menu" hidden>
+        <a href="#home">🏠 خانه</a>
+        <a href="#s1">🪙 شروع خرید</a>
+        <a href="#s5">📖 راهنمای وارد کردن کد</a>
+        <a href="#faq">❓ سوالات متداول</a>
+      </nav>
+    </div>
+    <a class="brand" href="#home">تیزبین</a>
+    <a class="buy" href="#s1">خرید سکه</a>
+  </div>
+</div>
+
+<div class="progress" id="progress" hidden>
+  <div class="wrap">
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="ptext" id="ptext"></div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <!-- صفحه اول: فقط یک دکمه -->
+  <section class="screen home" id="home">
+    <div class="logo">🧠</div>
+    <h1 id="gameName"></h1>
+    <p id="tagline"></p>
+    <a class="btn big" href="#s1">شروع خرید ←</a>
+  </section>
+
+  <!-- مرحله ۱ -->
+  <section class="screen" id="s1" hidden>
+    <h2>مرحله ۱: انتخاب بسته</h2>
+    <p class="sub">روی بسته‌ی دلخواه بزنید. می‌توانید دوباره عوضش کنید.</p>
+    <div class="grid" id="pkgGrid"></div>
+    <div class="stickybar">
+      <div class="selbar" id="selbar"><span id="selTxt">هنوز بسته‌ای انتخاب نشده</span><b id="selPrice"></b></div>
+      <button class="next full" id="n1" type="button" disabled>ادامه ←</button>
+    </div>
+  </section>
+
+  <!-- مرحله ۲ -->
+  <section class="screen" id="s2" hidden>
+    <h2>مرحله ۲: بررسی سفارش</h2>
+    <p class="sub">سفارش خود را ببینید و اگر خواستید نام بنویسید.</p>
+    <div class="box">
+      <table class="sum">
+        <tr><td>بسته</td><td id="sumPkg">—</td></tr>
+        <tr><td>تعداد سکه</td><td id="sumCoins">—</td></tr>
+        <tr><td>قیمت هر سکه</td><td id="sumPer">—</td></tr>
+        <tr><td>نحوه تحویل</td><td>کد یکبارمصرف</td></tr>
+        <tr class="total"><td>مبلغ قابل پرداخت</td><td id="sumPrice">—</td></tr>
+      </table>
+      <label class="lbl" for="userName">نام شما (اختیاری)</label>
+      <input type="text" id="userName" placeholder="مثلاً: علی" maxlength="40" autocomplete="off">
+      <p class="note">نام فقط در متن پیام به ادمین می‌آید و روی همین مرورگر ذخیره می‌شود. اطلاعات شما به هیچ سرور یا سایتی فرستاده نمی‌شود.</p>
+    </div>
+    <div class="trust"><span>🔒 کد یکبارمصرف</span><span>⚡ تحویل سریع توسط ادمین</span><span>💬 ۴ راه ارتباطی</span></div>
+    <div class="nav"><button class="back" data-go="s1" type="button">→ قبلی</button><button class="next" data-go="s3" type="button">ادامه ←</button></div>
+  </section>
+
+  <!-- مرحله ۳ -->
+  <section class="screen" id="s3" hidden>
+    <h2>مرحله ۳: پیام به ادمین</h2>
+    <p class="sub">با هر پیام‌رسانی که راحت‌ترید پیام بدهید.</p>
+    <div class="box">
+      <div id="pick" class="pick"></div>
+      <p class="lbl">متنی که برای ادمین فرستاده می‌شود:</p>
+      <pre class="msg" id="msgPrev"></pre>
+      <button class="copy" id="copyBtn" type="button">📋 کپی متن سفارش</button>
+      <div class="contacts" id="contactList"></div>
+      <p class="note">با زدن هر دکمه، متن سفارش کپی می‌شود و پیام‌رسان باز می‌شود. اگر متن خودش وارد نشد، داخل چت «چسباندن» (Paste) را بزنید.</p>
+    </div>
+    <div class="box warn">
+      ⚠️ فقط به آیدی‌هایی که در همین صفحه نوشته شده پیام بدهید. اگر کسی با آیدی دیگری خودش را ادمین معرفی کرد، پول نریزید.
+    </div>
+    <div class="nav"><button class="back" data-go="s2" type="button">→ قبلی</button><button class="next" data-go="s4" type="button">پیام دادم، ادامه ←</button></div>
+  </section>
+
+  <!-- مرحله ۴ -->
+  <section class="screen" id="s4" hidden>
+    <h2>مرحله ۴: پرداخت و دریافت کد</h2>
+    <p class="sub">بعد از پیام دادن، این کارها را انجام دهید.</p>
+    <div class="box">
+      <ol class="steps">
+        <li>ادمین مبلغ و روش پرداخت را به شما می‌گوید.</li>
+        <li>پرداخت را انجام دهید و عکس یا رسید پرداخت را برای ادمین بفرستید.</li>
+        <li>ادمین بعد از تأیید پرداخت، یک <b>کد یکبارمصرف</b> برایتان می‌فرستد.</li>
+        <li>کد را کپی کنید و به مرحله بعد بروید.</li>
+      </ol>
+    </div>
+    <div class="box warn">
+      🔒 کد را به هیچ‌کس ندهید. هر کد فقط یک بار کار می‌کند. ادمین هرگز رمز کارت یا رمز دوم شما را نمی‌خواهد.
+    </div>
+    <div class="nav"><button class="back" data-go="s3" type="button">→ قبلی</button><button class="next" data-go="s5" type="button">کد را گرفتم ←</button></div>
+  </section>
+
+  <!-- مرحله ۵ -->
+  <section class="screen" id="s5" hidden>
+    <div class="party">🎉</div>
+    <h2>مرحله ۵: وارد کردن کد در بازی</h2>
+    <p class="sub">این مرحله را بدون خرید هم می‌توانید ببینید.</p>
+    <div class="box">
+      <ol class="steps">
+        <li>بازی <b>تیزبین</b> را باز کنید.</li>
+        <li>به بخش <b>فروشگاه</b> بروید.</li>
+        <li>کد را در کادر مخصوص کد بچسبانید (Paste).</li>
+        <li>دکمه <b>تأیید</b> را بزنید.</li>
+        <li>اگر درست بود، سکه به حساب شما اضافه می‌شود یا حالت دو نفره باز می‌شود. 🎉</li>
+      </ol>
+      <p class="note">کد را دقیقاً همان‌طور که ادمین داده وارد کنید. حروف را با دقت بزنید و فاصله اضافه نگذارید. بهتر است کپی و Paste کنید.</p>
+    </div>
+    <div class="nav"><button class="back" data-go="faq" type="button">سوالات متداول</button><button class="next" data-go="home" type="button">پایان ✔</button></div>
+  </section>
+
+  <!-- سوالات متداول -->
+  <section class="screen" id="faq" hidden>
+    <h2>سوالات متداول</h2>
+    <div class="box" id="faqList"></div>
+    <div class="nav"><button class="back" data-go="home" type="button">→ خانه</button><button class="next" data-go="s1" type="button">شروع خرید ←</button></div>
+  </section>
+
+</main>
+
+<footer>© <span id="footName"></span></footer>
+<div id="toast" role="status"></div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
